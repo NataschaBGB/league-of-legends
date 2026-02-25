@@ -1,0 +1,28 @@
+# Why use this?
+# This .htaccess file is necessary to ensure that all requests to our API are handled by index.php, which serves as the front controller.
+# This allows us to implement a RESTful API structure where we can have clean URLs and handle routing in our PHP code.
+# Without this .htaccess file, Apache would try to find a physical file or directory for each request, and if it didn't find it, it would return a 404 error.
+#   Example:
+#       - A request to /champions/1 would look for a file or directory named "champions/1" and fail,
+#       instead of routing the request to index.php where we can handle it properly.
+#       - In index.php, we can parse the URL and determine which controller and method to call based on the request path
+#       and HTTP method.
+#       - Index.php gets data from router.php and router.php gets
+# With this configuration, we can instead handle all requests through index.php, giving us more flexibility in how we structure our API and handle different HTTP methods (GET, POST, PUT, DELETE, etc.).
+
+# Enable rewrite engine
+# This allows us to redirect all requests to index.php, which can then handle routing in our PHP code.
+# If a file or directory exists, it will be used directly, otherwise the request will be redirected to index.php.
+RewriteEngine On
+
+# !-f means "if the file does not exist"
+RewriteCond %{REQUEST_FILENAME} !-f
+# !-d means "if the directory does not exist"
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirect everything to index.php
+# ^(.*)$ - This matches any request and captures it in a group (.*), which can be used in index.php if needed.
+# index.php - This is the target file that will handle all requests.
+# QSA (Query String Append) - This ensures that any query parameters in the original request are preserved and passed to index.php.
+# L (Last) - This tells Apache to stop processing further rewrite rules if this rule matches, ensuring that the request is handled by index.php.
+RewriteRule ^(.*)$ index.php [QSA,L]
