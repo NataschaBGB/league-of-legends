@@ -5,14 +5,17 @@
 
     require_once __DIR__ . '/helpers/utils.php';
 
-    // Fjern base path
-    $uri = str_replace('/league-of-legends', '', $_SERVER['REQUEST_URI']);
-    $uri = explode('/', trim($uri, '/'));
+    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-    $api = $uri[0] ?? null;
-    $version = $uri[1] ?? null;
-    $resource = $uri[2] ?? null;
-    $id = $uri[3] ?? null;
+    // Fjern base path
+    $uri = str_replace('/league-of-legends', '', $uri);
+
+    $segments = explode('/', trim($uri, '/'));
+
+    $api = $segments[0] ?? null;
+    $version = $segments[1] ?? null;
+    $resource = $segments[2] ?? null;
+    $id = $segments[3] ?? null;
 
     $method = $_SERVER['REQUEST_METHOD'];
 

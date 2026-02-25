@@ -20,11 +20,14 @@
                     case 'GET':
                         if ($id) {
                             $champion = $this->service->getChampion($id);
-                            respond(addChampionLinks($champion));
-                        } else {
-                            $champions = $this->service->getAllChampions();
-                            $champions = addChampionsLinks($champions);
-                            respond($champions);
+                            respond(addChampionLinks($champion), 200);
+                        }
+                        else {
+                            $offset = isset($_GET['offset']) ? max(0, (int)$_GET['offset']) : 0;
+                            $limit  = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+
+                            $champions = $this->service->getAllChampions($offset, $limit);
+                            respond(addPagePagination($champions, $offset, $limit), 200);
                         }
                         break;
 

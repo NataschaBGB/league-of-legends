@@ -33,8 +33,8 @@ function respond($data, $status = 200) {
  * Hent ID fra URL /champions/ID
  * SegmentIndex default 2: /league-of-legends/api/v1/champions/50
  */
-function getIdFromUrl($segmentIndex = 2) {
-    $uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+function getIdFromUrl(int $segmentIndex = 3): ?int {
+    $uri = trim($_SERVER['REQUEST_URI'], '/');
     $parts = explode('/', $uri);
     return isset($parts[$segmentIndex]) ? (int)$parts[$segmentIndex] : null;
 }
@@ -55,44 +55,31 @@ function getJsonData() {
 }
 
 // Tilføj HATEOAS links til champion data
-// function addChampionLinks($champion) {
+function addChampionLinks(array $champion): array {
+    $id = $champion['id'];
 
-//     $id = $champion['id'];
-
-//     $champion['links'] = [
-//         "self" => "/league-of-legends/api/v1/champions/$id",
-//         "champions" => "/league-of-legends/api/v1/champions"
-//     ];
-
-//     return $champion;
-// }
-
-
-
-/**
- * Læs JSON body eller form-data fra request
- * Returnerer altid en assoc. array
- */
-
-/**
- * Tilføj HATEOAS links til champion data
- */
-function addChampionLinks($champion) {
-    $id = $champion['id'] ?? null;
-
-    if ($id) {
-        $champion['links'] = [
-            "self" => "/league-of-legends/api/v1/champions/$id",
-            "champions" => "/league-of-legends/api/v1/champions"
-        ];
-    }
+    $champion['links'] = [
+        "self" => "/league-of-legends/api/v1/champions/$id",
+        "all_champions" => "/league-of-legends/api/v1/champions?offset=0&limit=10"
+    ];
 
     return $champion;
 }
 
-/**
- * Tilføj HATEOAS links til en liste af champions
- */
-function addChampionsLinks(array $champions) {
-    return array_map('addChampionLinks', $champions);
+// Tilføj pagination + HATEOAS-links til et array af champions
+function addPagePagination(array $champions, int $offset = 0, int $limit = 10): array {
+    // Tilføj HATEOAS-links til hver champion
+    $championsWithLinks = array_map('addChampionLinks', $champions);
+
+    return [
+        "pagination" => [
+            "prev" => $offset > 0
+                ? "/league-of-legends/api/v1/champions?offset=" . max(0, $offset - $limit) . "&limit=$limit"
+                : null,
+            "next" => count($champions) === $limit
+                ? "/league-of-legends/api/v1/champions?offset=" . ($offset + $limit) . "&limit=$limit"
+                : null
+        ],
+        "champions" => $championsWithLinks
+    ];
 }
