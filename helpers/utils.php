@@ -1,4 +1,6 @@
 <?php
+// utils.php contains helper functions that are used across the application, such as sending JSON responses, reading JSON data from requests, and adding HATEOAS links to champion data.
+// These functions help keep the code organized and reusable, allowing us to easily send consistent responses and handle request data in a standardized way throughout our API.
 
     // send JSON response with status code
     function respond($data, $status = 200) {
