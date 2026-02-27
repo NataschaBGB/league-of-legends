@@ -8,55 +8,55 @@ The project was developed as a school project, as a backend API and can be used 
 
 ## 🚀 Features
 
-✅ RESTful endpoints (GET, POST, PUT, PATCH, DELETE)
-✅ API versioning (/api/v1/)
-✅ Clean architecture-inspired structure
-✅ Separation of controller and service layer
-✅ PDO with prepared statements
-✅ Offset/Limit pagination
-✅ Total count (similar to the Pokémon API)
-✅ HATEOAS links
-✅ JSON responses
-✅ Proper HTTP status codes
-✅ 406 Not Acceptable if the Accept header is not application/json
+- ✅ RESTful endpoints (GET, POST, PUT, PATCH, DELETE)
+- ✅ API versioning (/api/v1/)
+- ✅ Clean architecture-inspired structure
+- ✅ Separation of controller and service layer
+- ✅ PDO with prepared statements
+- ✅ Offset/Limit pagination
+- ✅ Total count (similar to the Pokémon API)
+- ✅ HATEOAS links
+- ✅ JSON responses
+- ✅ Proper HTTP status codes
+- ✅ 406 Not Acceptable if the Accept header is not application/json
 
 ---
 
 ## 📂 Project Structure
-league-of-legends/
-│
-├── index.php - Entry point
-├── connect.php - Database connection (PDO)
-│
-├── routes/
-│ └── v1.php - Version 1 routing
-│
-├── controllers/
-│ └── ChampionController.php
-│
-├── services/
-│ └── ChampionService.php
-│
-└── helpers/
-└── utils.php - respond(), retrieve JSON data, HATEOAS, pagination
+- league-of-legends/
+- │
+- ├── index.php - Entry point
+- ├── connect.php - Database connection (PDO)
+- │
+- ├── routes/
+- │ └── v1.php - Version 1 routing
+- │
+- ├── controllers/
+- │ └── ChampionController.php
+- │
+- ├── services/
+- │ └── ChampionService.php
+- │
+- └── helpers/
+- └── utils.php - respond(), retrieve JSON data, HATEOAS, pagination
 
 ---
 
 ## 🔄 Request Flow
 
-Client
-↓
-index.php
-↓
-routes/v1.php
-↓
-ChampionController
-↓
-ChampionService
-↓
-Database (PDO)
-↓
-JSON Response + HATEOAS + Pagination
+- Client
+- ↓
+- index.php
+- ↓
+- routes/v1.php
+- ↓
+- ChampionController
+- ↓
+- ChampionService
+- ↓
+- Database (PDO)
+- ↓
+- JSON Response + HATEOAS + Pagination
 
 ---
 
@@ -92,7 +92,7 @@ http://localhost/league-of-legends/api/v1/
 
 ## 📄 Example Response (Paginated)
 
-JSON
+´´´json
 {
     "count": 7,
     "previous": null,
