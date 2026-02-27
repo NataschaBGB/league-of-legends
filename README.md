@@ -92,7 +92,7 @@ http://localhost/league-of-legends/api/v1/
 
 ## 📄 Example Response (Paginated)
 
-´´´json
+```json
 {
     "count": 7,
     "previous": null,
