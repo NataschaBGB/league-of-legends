@@ -96,7 +96,7 @@ http://localhost/league-of-legends/api/v1/
 {
     "count": 7,
     "previous": null,
-    "next": "/league-of-legends/api/v1/champions?offset=5&limit=5",
+    "next": "/league-of-legends/api/v1/champions?offset=0&limit=10",
     "champions": [
         {
             "id": 50,
