@@ -1,4 +1,7 @@
 <?php
+// v1.php is responsible for routing requests to the correct resource handler (e.g. ChampionController) based on the third segment of the URI (from index.php).
+// It receives the HTTP method and ID (if provided) from index.php and includes the appropriate controller to handle champion-related requests.
+// It also includes functions from utils.php to use for sending responses and reading request data.
 
     // get functions from utils.php to use here
     require_once __DIR__ . '/../helpers/utils.php';

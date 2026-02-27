@@ -1,6 +1,6 @@
 <?php
 
-// ChampionController.php is responsible for handling HTTP requests related to champions. It receives the HTTP method and ID (if provided) from the router (routes/v1.php) and uses the ChampionService to perform database operations. It also adds HATEOAS links and pagination to the responses before sending them back as JSON.
+// ChampionController.php is responsible for handling HTTP requests related to champions. It receives the HTTP method and ID (if provided) from the router (routes/v1.php) and uses the ChampionService to perform database operations. It also adds page pagination to the responses before sending them back as JSON.
 
     // get functions from utils.php to use here
     require_once __DIR__ . '/../../helpers/utils.php';

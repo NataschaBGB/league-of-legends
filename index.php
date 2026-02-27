@@ -1,4 +1,7 @@
 <?php
+// index.php is the main entry point for all API requests.
+// It parses the URI to determine the API version and resource being requested, and then routes the request to the appropriate handler (e.g. v1.php for version 1 of the API).
+// It also includes helper functions from utils.php for sending responses and reading request data.
 
     // show errors for debugging
     ini_set('display_errors', 1);
@@ -22,6 +25,7 @@
     $resource = $segments[2] ?? null;
     $id = $segments[3] ?? null;
 
+
     // get the HTTP method (GET, POST, PUT, PATCH, DELETE) from the request
     $method = $_SERVER['REQUEST_METHOD'];
 
@@ -44,77 +48,3 @@
         default:
             respond(["error" => "API version not supported"], 400);
     }
-
-
-
-
-// [Client / Browser / Postman]
-//          |
-//          | HTTP Request (GET, POST, PUT, PATCH, DELETE)
-//          | fx /league-of-legends/api/v1/champions/50
-//          v
-//     ┌──────────────────────┐
-//     │    index.php         │
-//     │ - Error reporting    │
-//     │ - Includes utils     │
-//     │ - Parses URI         │
-//     │ - Splits base path   │
-//     │ - Checks HTTP method │
-//     └──────────────────────┘
-//          |
-//          | version = 'v1'
-//          v
-//     ┌─────────────────────┐
-//     │    routes/v1.php    │
-//     │ - Matches resource  │
-//     │ - Includes          │
-//     │  ChampionController │
-//     │ - Calls             │
-//     │   handleRequest()   │
-//     └─────────────────────┘
-//          |
-//          | calls
-//          v
-// ┌───────────────────────────┐
-// │   ChampionController.php  │
-// │ - Handles HTTP methods    │
-// │ - Reads ID from $id       │
-// │ - Reads JSON / form-data  │
-// │ - Calls ChampionService   │
-// │ - Adds HATEOAS links      │
-// │ - Adds pagination         │
-// └───────────────────────────┘
-//          |
-//          | calls
-//          v
-// ┌───────────────────────────┐
-// │    ChampionService.php    │
-// │ - Database logic (SELECT, │
-// │   INSERT, UPDATE, DELETE) │
-// │ - Transactions            │
-// │ - Returns data as array   │
-// └───────────────────────────┘
-//          |
-//          | uses
-//          v
-// ┌──────────────────────────┐
-// │     connect.php (PDO)    │
-// │ - Creates DB connection  │
-// │ - Prepared statements    │
-// └──────────────────────────┘
-//          |
-//          | and sends data back as array to
-//          v
-// ┌──────────────────────────┐
-// │  ChampionController.php  │
-// │ - Wraps array in JSON    │
-// │ - Adds HATEOAS           |
-// |     + pagination links   │
-// │ - Sends HTTP status      │
-// └──────────────────────────┘
-//          |
-//          | HTTP Response (JSON)
-//          v
-//       [Client / Postman]
-// JSON response with data requested in the beginning
-//      - (e.g. champion with id 50, or list of champions with pagination)
